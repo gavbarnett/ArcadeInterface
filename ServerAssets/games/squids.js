@@ -112,7 +112,7 @@ function updateGameArea() {
             mindist=dist;
           }
         }
-        if (mindist > 20){
+        if (mindist > 20 && foods.length<750){
           foods.push(new food(foods[i].size/3, colorshaker(foods[i].shcolor), foods[i].x-100+Math.random()*200, foods[i].y-100+Math.random()*200, Math.max(foods[i].split* (0.9+ 0.2*Math.random()),2.7)))
           if (foods[foods.length-1].x<0 ||foods[foods.length-1].x>canvwidth || foods[foods.length-1].y<0 ||foods[foods.length-1].y>canvheight){
             foods.splice(foods.length-1,1);
