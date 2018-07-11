@@ -16,7 +16,6 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         canvwidth = this.canvas.width;
         canvheight = this.canvas.height;
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         for (i = 0; i <15; i++){
           squids[i] = new squid(2+Math.round(Math.random()*20), '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6), Math.round(Math.random()*this.canvas.width), Math.round(Math.random()*this.canvas.height),50+Math.round(Math.random()*100), 30+Math.random()*100);
         }

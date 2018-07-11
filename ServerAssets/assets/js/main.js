@@ -45,7 +45,6 @@ function runTestGame(){
         if (typeof startGame === "function") { 
             // safe to use the function
             startGame()
-            clearInterval()
         }
     },100)
 }
