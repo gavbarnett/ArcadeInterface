@@ -18,7 +18,24 @@ function resize(){
     var canvas = document.getElementById('canvas')
     canvas.width  = window.innerWidth
     canvas.height = window.innerHeight  
-    crtEffect()     
+    //crtEffect()
+    loadGames()   
+    crtEffect()  
+}
+
+function loadGames(){
+    var canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d');
+    base_image = new Image();
+    base_image.src = 'games/squids/assets/cartridge.png';
+    base_image.onload = function(){
+        base_image.width
+        var scaler = (base_image.height/canvas.height)/0.25
+        var n = 5
+        for (i = 0; i < n; i++){
+            context.drawImage(base_image, (canvas.width-base_image.width/scaler/2)*1/(n+2)*(i+1), canvas.height*0.5+(canvas.height*0.3-base_image.height/scaler)/(n+2)*i,base_image.width/scaler,base_image.height/scaler);
+        }
+    }
 }
 
 function fullscreen(){
@@ -38,7 +55,7 @@ function runTestGame(){
         startGame()
     } else {
         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = '/games/squids.js';
+        po.src = '/games/squids/squids.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); 
     } 
     setTimeout(function(){
