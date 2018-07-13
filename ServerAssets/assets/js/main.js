@@ -55,7 +55,7 @@ function runTestGame(){
         startGame()
     } else {
         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = '/games/squids/squids.js';
+        po.src = '/games/squids/main.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); 
     } 
     setTimeout(function(){
@@ -66,17 +66,77 @@ function runTestGame(){
     },100)
 }
 
-function controls(){
+function Blank(){
+
+}
+
+
+function controls(controlConfig){
+    if (!controlConfig){
+        //should add better safegaurds here.
+        controlConfig = []
+        controlConfig.Up = Blank
+        controlConfig.Down = Blank
+        controlConfig.Left = Blank
+        controlConfig.Right = Blank
+        controlConfig.L = Blank
+        controlConfig.R = Blank
+        controlConfig.A = Blank
+        controlConfig.B = Blank
+        controlConfig.X = Blank
+        controlConfig.Y = Blank
+        controlConfig.Fullscreen = fullscreen
+        controlConfig.Start = runTestGame
+        controlConfig.Select = Blank
+    }
+    
     window.onresize = function(e) {
         resize()
     }
     document.onkeydown = function(e) {
         e = e || window.event
-        if (e.keyCode == 32) { //spacebar
-            fullscreen()
+        key = e.which || e.keyCode
+        // --- Directions ---
+        if (key == 38) { //up
+            controlConfig.Up() 
         }
-        if (e.keyCode == 65) { //a
-            runTestGame()
+        if (key == 40) { //down
+            controlConfig.Down() 
+        }
+        if (key == 37) { //left
+            controlConfig.Left() 
+        }
+        if (key == 39) { //right
+            controlConfig.Right() 
+        }
+        // --- Actions ---
+        if (key == 81) { //L (q)
+            controlConfig.L() 
+        }
+        if (key == 87) { //R (w)
+            controlConfig.R() 
+        }
+        if (key == 65) { //A (a)
+            controlConfig.A() 
+        }
+        if (key == 83) { //B (s)
+            controlConfig.B() 
+        }
+        if (key == 90) { //X (z)
+            controlConfig.X() 
+        }
+        if (key == 88) { //Y (y)
+            controlConfig.Y() 
+        }
+        // --- Options ---
+        if (key == 32) { // (spacebar)
+            controlConfig.Fullscreen() 
+        }
+        if (key == 77) { //Start (m)
+            controlConfig.Start() 
+        }
+        if (key == 78) { //Select (n)
+            controlConfig.Select() 
         }
     } 
 }
