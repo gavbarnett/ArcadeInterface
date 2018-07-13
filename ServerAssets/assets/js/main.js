@@ -27,7 +27,7 @@ function loadGames(){
     var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
     base_image = new Image();
-    base_image.src = 'games/squids/assets/cartridge.png';
+    base_image.src = 'games/tennis/assets/cartridge.png';
     base_image.onload = function(){
         base_image.width
         var scaler = (base_image.height/canvas.height)/0.25
@@ -55,7 +55,7 @@ function runTestGame(){
         startGame()
     } else {
         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = '/games/squids/main.js';
+        po.src = '/games/tennis/main.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); 
     } 
     setTimeout(function(){
