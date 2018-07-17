@@ -1,77 +1,58 @@
 
-var paused = false;
-function startGame() {
-  myGameArea.start();
-}
+var tennis = {
+  paused = false,
 
-var myGameArea = {   
+  load: function() {
+    //first function called by main arcade program
+    console.log("Game loading....")
+    controlSetup();
+    start();
+  },
+
+  controlSetup: function(){
+    console.log("Configuring Controls")
+    var controlConfig = []
+        // replace = x with functions
+        // no parenthesis ()
+        controlConfig.Up = Blank
+        controlConfig.Down = Blank
+        controlConfig.Left = Blank
+        controlConfig.Right = Blank
+        controlConfig.L = Blank
+        controlConfig.R = Blank
+        controlConfig.A = Blank
+        controlConfig.B = Blank
+        controlConfig.X = Blank
+        controlConfig.Y = Blank
+        controlConfig.Fullscreen = fullscreen
+        controlConfig.Start = runTestGame
+        controlConfig.Select = Blank
+        // configures the above controls
+        controls(controlConfig)
+  },
+
   start : function() {
-        this.canvas = document.getElementById('canvas'); 
-        this.context = this.canvas.getContext("2d");
-        updateGameArea();
-    },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
+    console.log("Game starting....")
+    updateGameArea();
+  },
 
-function squid(size, shcolor, x, y, divspeed, split) {
-    this.size = size;
-    this.x = x;
-    this.y = y;
-    this.shcolor = shcolor;
-    this.divspeed = divspeed;
-    this.drain = 0.01*divspeed/50;
-    this.split = split;
-    this.update = function(){
-        ctx = myGameArea.context;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, 2*Math.PI, false);
-        ctx.fillStyle = this.shcolor;
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff'
-        ctx.stroke();
-    }
-}
+  clear : function() {
+    canvas = document.getElementById('canvas'); 
+    context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  },
 
-function food(size, shcolor, x, y, split) {
-    this.size = size;
-    this.x = x;
-    this.y = y;
-    this.shcolor = shcolor;
-    this.split = Math.max(2, split);
-    this.growth = 0.01*6/split;
-    this.update = function(){
-        ctx = myGameArea.context;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, 2*Math.PI, false);
-        ctx.fillStyle = this.shcolor;
-        ctx.fill();
-        ctx.strokeStyle = '#000000'
-        ctx.stroke();
+  updateGameArea : function() {
+    if (!paused) {
+      requestAnimationFrame(updateGameArea);
+    } else {
+        return false;
+        //function exits here is pause = true
     }
-}
+      myGameArea.clear();
+      Console.log("Tennis")
 
-function msg(text, x, y){
-  this.text = text;
-  this.color = 'white';
-  this.x = x;
-  this.y = y;
-  this.update = function(){
-    ctx = myGameArea.context;
-    ctx.font = "16px Arial";
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = "left";
-    ctx.fillText(this.text,this.x, this.y);//this.text, this.x, this.y);
   }
-}
 
-function updateGameArea() {
-  if (!paused) {
-    requestAnimationFrame(updateGameArea);
-  } else {
-      return false;
-  }
-    myGameArea.clear();
 }
 

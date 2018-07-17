@@ -1,5 +1,4 @@
 function openArcade() {
-    //document.body.addEventListener('click',fullscreen)
     controls();
     resize()
 }
@@ -24,18 +23,26 @@ function resize(){
 }
 
 function loadGames(){
+    var client = new HttpClient();
     var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
-    base_image = new Image();
-    base_image.src = 'games/tennis/assets/cartridge.png';
-    base_image.onload = function(){
-        base_image.width
-        var scaler = (base_image.height/canvas.height)/0.25
-        var n = 5
-        for (i = 0; i < n; i++){
-            context.drawImage(base_image, (canvas.width-base_image.width/scaler/2)*1/(n+2)*(i+1), canvas.height*0.5+(canvas.height*0.3-base_image.height/scaler)/(n+2)*i,base_image.width/scaler,base_image.height/scaler);
+    //base_image = new Image();
+
+    client.get('/listAllGames', function(response) {
+        gamesList = JSON.parse (response)
+        var gameImage =[]
+        console.log (gamesList.length)
+        for (i = 0; i < gamesList.length; i++){
+            gameImage[i] = new Image();
+            gameImage[i].src = 'games/' + gamesList[i].file + '/assets/cartridge.png';
+        }
+        gameImage[gamesList.length-1].onload = function(){
+        for (i = 0; i < gamesList.length; i++){
+            var scaler = (gameImage[i].height/canvas.height)/0.25
+            context.drawImage(gameImage[i], (canvas.width-gameImage[i].width/scaler/2)*1/(gamesList.length+2)*(i+1), canvas.height*0.5+(canvas.height*0.3-gameImage[i].height/scaler)/(gamesList.length+2)*i,gameImage[i].width/scaler,gameImage[i].height/scaler);
         }
     }
+    });
 }
 
 function fullscreen(){
@@ -67,7 +74,8 @@ function runTestGame(){
 }
 
 function Blank(){
-
+    //don't delete
+    //might be better under controls function
 }
 
 
@@ -139,4 +147,18 @@ function controls(controlConfig){
             controlConfig.Select() 
         }
     } 
+}
+
+class HttpClient {
+    constructor() {
+        this.get = function (aUrl, aCallback) {
+            var anHttpRequest = new XMLHttpRequest();
+            anHttpRequest.onreadystatechange = function () {
+                if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                    aCallback(anHttpRequest.responseText);
+            };
+            anHttpRequest.open("GET", aUrl, true);
+            anHttpRequest.send(null);
+        };
+    }
 }
